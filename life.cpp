@@ -14,7 +14,7 @@ display::display(int x,int y,int width,int height,QGraphicsItem *parent):QGraphi
 }
 display::~display()
 {
-    delete this;
+   
 }
 void display::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
