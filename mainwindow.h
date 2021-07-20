@@ -16,6 +16,8 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
     void on_timer_timeout();
+    void on_pushButton_3_clicked();
+
 public:
     MainWindow(int x,int y);
 
@@ -24,13 +26,12 @@ public:
 private:
     Ui::MainWindow *ui;
     int x,y;
-    int height, width, iterations;
+    int  iterations;
     QTimer *timer;
     //Life a(height, width);
-    QGraphicsScene * scene;
-    void new_game();
-    QVector<QVector<display*> > fills;
+    QGraphicsScene* scene;
     Life *game_of_life;
+    void new_game();
 
 
 };

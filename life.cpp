@@ -6,7 +6,7 @@
 #include "windows.h"
 using namespace std;
 
-display::display(int x,int y,int width,int height,QGraphicsItem *parent):QGraphicsRectItem(x,y,width,height,parent)
+display::display(qreal x,qreal y,qreal width,qreal height,QGraphicsItem *parent):QGraphicsRectItem(x,y,width,height,parent)
 
 {
     this->setBrush(QBrush(Qt::white));
@@ -14,7 +14,7 @@ display::display(int x,int y,int width,int height,QGraphicsItem *parent):QGraphi
 }
 display::~display()
 {
-   
+
 }
 void display::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -94,7 +94,7 @@ list<cell> Life::neighbors(const cell& var)
             }
         }
     }
-    //for (auto i : points) cout << i.x <<i.y<<" ";
+
     return points;
 }
 

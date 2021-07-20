@@ -11,7 +11,7 @@ using namespace std;
 class display : public QGraphicsRectItem
 {
 public:
-    display(int x,int y,int width,int height,QGraphicsItem *parent =0);
+    display(qreal x,qreal y,qreal width,qreal height,QGraphicsItem *parent =0);
     ~display();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void changeColor();

@@ -2,13 +2,11 @@
 #include "ui_mainwindow.h"
 
 
-MainWindow::MainWindow(int x, int y) :x(x),y(y),iterations(0),scene(NULL),
-    QMainWindow(0)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(int x, int y) :x(x),y(y),iterations(0),scene(NULL), QMainWindow(0), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     timer= new QTimer();
-    timer->setInterval(500);
+    timer->setInterval(250);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(on_timer_timeout()));
     game_of_life= new Life(x,y);
 }
@@ -55,11 +53,13 @@ void MainWindow::on_timer_timeout()
     {
         timer->stop();
         QMessageBox::about(this, "Won","You won!\nIterations: "+QString().setNum(iterations));
+        iterations=0;
     }
     else if (alive.empty()&& result==0)
     {
         timer->stop();
         QMessageBox::about(this, "Loss","Game Over!\nIterations: "+QString().setNum(iterations));
+        iterations=0;
     }
 
     else
@@ -89,10 +89,10 @@ void MainWindow::new_game()
     {
         for(int j=0;j<y;j++)
         {
-            display* rec= new display(0,0,scene->sceneRect().width()/(x),scene->sceneRect().height()/(y));
-            scene->addItem(rec);
-            rec->setPos(0+i*scene->width()/(x),0+j*scene->height()/(y));
-            game_of_life->add_cell(i,j,rec);
+            display* ptr= new display(0,0,scene->sceneRect().width()/(x),scene->sceneRect().height()/(y));
+            scene->addItem(ptr);
+            ptr->setPos(0+i*scene->width()/(x),0+j*scene->height()/(y));
+            game_of_life->add_cell(i,j,ptr);
         }
 
     }
@@ -113,3 +113,26 @@ void MainWindow::new_game()
       }
      ui->graphicsView->setScene(scene);
 }
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    if(scene != NULL)
+    {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(1, 10000);
+    for (int i = 0;i < x;++i)
+        for (int j = 0;j < y;++j)
+        {
+             unsigned int num = dis(gen);
+            if (num % 2 == 0)
+                game_of_life->get_cell({i,j})->setBrush(QBrush(Qt::green));
+
+            else
+                game_of_life->get_cell({i,j})->setBrush(QBrush(Qt::white));
+        }
+
+    }
+}
+
+
