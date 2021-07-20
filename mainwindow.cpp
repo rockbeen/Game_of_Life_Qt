@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <stdlib.h>
+#include <time.h>
 
 MainWindow::MainWindow(int x, int y) :x(x),y(y),iterations(0),scene(NULL), QMainWindow(0), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     timer= new QTimer();
     timer->setInterval(250);
-    QObject::connect(timer,SIGNAL(timeout()),this,SLOT(on_timer_timeout()));
+    QObject::connect(timer,SIGNAL(timeout()),this,SLOT(new_iterations()));
     game_of_life= new Life(x,y);
 }
 
@@ -21,7 +22,7 @@ void MainWindow::on_pushButton_clicked()
 {
     new_game();
 }
-void MainWindow::on_timer_timeout()
+void MainWindow::new_iterations()
 {
     list<cell> neig;
     unsigned int alive_neighbors = 0;
@@ -91,7 +92,7 @@ void MainWindow::new_game()
         {
             display* ptr= new display(0,0,scene->sceneRect().width()/(x),scene->sceneRect().height()/(y));
             scene->addItem(ptr);
-            ptr->setPos(0+i*scene->width()/(x),0+j*scene->height()/(y));
+            ptr->setPos(i*scene->width()/(x),j*scene->height()/(y));
             game_of_life->add_cell(i,j,ptr);
         }
 
@@ -116,15 +117,15 @@ void MainWindow::new_game()
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    srand(time(NULL));
+
     if(scene != NULL)
     {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dis(1, 10000);
+
     for (int i = 0;i < x;++i)
         for (int j = 0;j < y;++j)
         {
-             unsigned int num = dis(gen);
+             unsigned int num = rand();
             if (num % 2 == 0)
                 game_of_life->get_cell({i,j})->setBrush(QBrush(Qt::green));
 
