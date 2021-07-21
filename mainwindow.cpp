@@ -24,6 +24,8 @@ void MainWindow::on_pushButton_clicked()
 }
 void MainWindow::new_iterations()
 {
+    if (iterations<1000)
+    {
     list<cell> neig;
     unsigned int alive_neighbors = 0;
     bool result=0;
@@ -73,6 +75,13 @@ void MainWindow::new_iterations()
         ++iterations;
         result=0;
     }
+    }
+    else
+    {
+        timer->stop();
+        QMessageBox::about(this, "Max","The maximum number of iterations has been reached!\nIterations: "+QString().setNum(iterations));
+        iterations=0;
+    }
 
 }
 void MainWindow::on_pushButton_2_clicked()
@@ -83,6 +92,8 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::new_game()
 {
+
+
     if (scene==NULL)
    {
     scene= new QGraphicsScene(0,0,ui->graphicsView->viewport()->width(),ui->graphicsView->viewport()->height());
