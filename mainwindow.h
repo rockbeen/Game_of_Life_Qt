@@ -13,10 +13,10 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 private slots:
 
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+    void on_pushButton_clicked();//"new game" button
+    void on_pushButton_2_clicked();//start of the game
     void new_iterations();
-    void on_pushButton_3_clicked();
+    void on_pushButton_3_clicked();//live cells are set randomly
 
 public:
     MainWindow(int x,int y);
@@ -30,7 +30,7 @@ private:
     QTimer *timer;
     //Life a(height, width);
     QGraphicsScene* scene;
-    Life *game_of_life;
+    Life *game_of_life;//the class of the game itself
     void new_game();
 
 

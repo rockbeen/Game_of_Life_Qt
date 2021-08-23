@@ -17,7 +17,7 @@ public:
     void changeColor();
 };
 
-struct cell
+struct cell//one cell
 {
     int x;
     int y;
@@ -29,26 +29,26 @@ struct cell
     bool operator==(const cell& p) const;
 
 };
-class MyHashFunction {
+class MyHashFunction {//Hash function for a hash table
     public:
 
         size_t operator()(const cell& var) const;
 };
 
-class Life
+class Life//the class of the game itself
 {
     private:
         int height, width;
-        unordered_map<cell,display*, MyHashFunction> planet;
+        unordered_map<cell,display*, MyHashFunction> planet;//all cells with their value (live/dead) are stored in a hash table
         unordered_map<cell,display*, MyHashFunction>::iterator it;
 
     public:
         Life(int, int);
         ~Life();
-        unordered_map<cell, display*, MyHashFunction>& access_planet();
-        void add_cell(int x,int y,display* ptr);
-        display* get_cell(cell);
-        list<cell>neighbors(const cell& var);
+        unordered_map<cell, display*, MyHashFunction>& access_planet();//get a table
+        void add_cell(int x,int y,display* ptr);//add a cell
+        display* get_cell(cell);//return the cell value
+        list<cell>neighbors(const cell& var);//list of cell neighbors
 };
 
 #endif // LIFE_H

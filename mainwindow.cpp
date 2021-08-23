@@ -18,7 +18,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked()//"new game" button
 {
     new_game();
 }
@@ -31,34 +31,34 @@ void MainWindow::new_iterations()
     bool result=0;
     list<cell> alive;
 
-    for (auto& item : game_of_life->access_planet())
+    for (auto& item : game_of_life->access_planet())//we go around each cell and look for neighbors for it
     {
 
         neig = game_of_life->neighbors(item.first);
         for (const auto& i : neig)
         {
 
-            if  (game_of_life->get_cell(i)->brush().color() == Qt::green)
+            if  (game_of_life->get_cell(i)->brush().color() == Qt::green)//if the cell is alive, we add it to the list
             {
                 ++alive_neighbors;
 
             }
         }
 
-        if (item.second->brush().color() == Qt::white && alive_neighbors ==3 ) alive.push_back(item.first);
+        if (item.second->brush().color() == Qt::white && alive_neighbors ==3 ) alive.push_back(item.first);//adding live cells to the list
         else if(item.second->brush().color() == Qt::green && (alive_neighbors < 2 || alive_neighbors > 3)) alive.push_back(item.first);
 
         if (item.second->brush().color() == Qt::green && (alive_neighbors== 2 || alive_neighbors == 3))result=1;
 
         alive_neighbors = 0;
     }
-    if (alive.empty()&& result==1)
+    if (alive.empty()&& result==1)//stable system
     {
         timer->stop();
         QMessageBox::about(this, "Won","You won!\nIterations: "+QString().setNum(iterations));
         iterations=0;
     }
-    else if (alive.empty()&& result==0)
+    else if (alive.empty()&& result==0)//all life is dead
     {
         timer->stop();
         QMessageBox::about(this, "Loss","Game Over!\nIterations: "+QString().setNum(iterations));
@@ -67,7 +67,7 @@ void MainWindow::new_iterations()
 
     else
     {
-        for (auto& item : alive)
+        for (auto& item : alive)//system updates
         {
             game_of_life->get_cell(item)->changeColor();
 
@@ -84,13 +84,13 @@ void MainWindow::new_iterations()
     }
 
 }
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_pushButton_2_clicked()//start of the game
 {
     if(scene != NULL)
         timer->start();
 }
 
-void MainWindow::new_game()
+void MainWindow::new_game()//new game(creating / updating a scene)
 {
 
 
@@ -126,7 +126,7 @@ void MainWindow::new_game()
      ui->graphicsView->setScene(scene);
 }
 
-void MainWindow::on_pushButton_3_clicked()
+void MainWindow::on_pushButton_3_clicked()//live cells are set randomly
 {
     srand(time(NULL));
 
